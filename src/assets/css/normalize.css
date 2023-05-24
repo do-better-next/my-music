@@ -348,7 +348,3 @@
     display: none;
   }
 
-  #nprogress .bar {
-    background-color: rgb(157, 157, 238) !important;
-    height: 7px !important;
-  }

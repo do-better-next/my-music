@@ -1,2 +1,41 @@
-@import url('./normalize.css');
-@import url('./reset.css');
+@import url("./normalize.css");
+@import url("./reset.css");
+#nprogress .bar {
+  height: 7px !important;
+}
+body {
+  position: relative;
+
+  background-blend-mode: screen;
+}
+.bgc {
+  background: linear-gradient(-90deg, coral, transparent),
+    linear-gradient(90deg, skyblue, transparent),
+    linear-gradient(limegreen, transparent);
+}
+.bgc-reverse {
+  background: #dae2f8; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #d6a4a4,
+    #dae2f8
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #d6a4a4,
+    #dae2f8
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.bgc2 {
+  background: #efefbb; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #d4d3dd,
+    #efefbb
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #d4d3dd,
+    #efefbb
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

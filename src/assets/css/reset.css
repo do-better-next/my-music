@@ -87,7 +87,7 @@
  }
   
  /*清除浮动*/
- .clearfix:before,
+ /* .clearfix:before,
  .clearfix:after{
    content: " ";
    display: inline-block;
@@ -97,12 +97,12 @@
  }
  .clearfix{
    *zoom: 1;
- }
+ } */
   
  /*隐藏*/
- .dn{
+ /* .dn{
    display: none;
  }
- 
+  */
  
 
