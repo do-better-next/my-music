@@ -1,12 +1,9 @@
 @import url("./normalize.css");
 @import url("./reset.css");
-#nprogress .bar {
-  height: 7px !important;
-}
 body {
   position: relative;
-
   background-blend-mode: screen;
+  font-size: 16px;
 }
 .bgc {
   background: linear-gradient(-90deg, coral, transparent),
@@ -39,3 +36,44 @@ body {
     #efefbb
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
+.barColor1 {
+  background: linear-gradient(to right, #ff0000, #ffff00) !important;
+}
+
+.barColor2 {
+  background: linear-gradient(to right, #00ff00, #00ffff) !important;
+}
+
+.barColor3 {
+  background: linear-gradient(to right, #0000ff, #ff00ff) !important;
+}
+
+.barColor4 {
+  background: linear-gradient(to right, #ff6600, #ff3399) !important;
+}
+
+.barColor5 {
+  background: linear-gradient(to right, #3366ff, #66ff33) !important;
+}
+
+.barColor6 {
+  background: linear-gradient(to right, #cc00cc, #00cccc) !important;
+}
+
+.barColor7 {
+  background: linear-gradient(to right, #ffcc00, #ccff00) !important;
+}
+
+.barColor8 {
+  background: linear-gradient(to right, #6600ff, #ff0066) !important;
+}
+
+.barColor9 {
+  background: linear-gradient(to right, #0099ff, #ffcc33) !important;
+}
+
+.barColor10 {
+  background: linear-gradient(to right, #cc3300, #0066cc) !important;
+}
+
