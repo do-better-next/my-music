@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+
 import './assets/css/index.css'
 import 'animate.css';
 import "nes.css/css/nes.min.css";
@@ -11,3 +12,4 @@ app.use(Vue3Lazy,{
     loading: loading
 });
 app.mount('#app')
+

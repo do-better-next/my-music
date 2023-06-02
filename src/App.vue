@@ -2,10 +2,15 @@
 import { onMounted, reactive, ref, watch, nextTick } from 'vue';
 import { getSingerId, getSingerDetails, getSongById } from './api/singer'
 import { generateRandomGradient } from './utils/generateRandomGradient'
+import JSConfetti from 'js-confetti'
+
+const confetti = new JSConfetti()
+
+
 //歌手id
 const singerId = ref(0)
 //搜索的歌手姓名
-const singerName = ref("法老")
+const singerName = ref("falao")
 //热门歌手列表
 const hotSingers = reactive([
   "GAI",
@@ -37,7 +42,6 @@ const hotSingers = reactive([
 ])
 //音频的src
 const songUrl = ref("")
-const isDisplay = ref(false)
 //搜索的歌手详细信息以及热门歌曲
 const singerDetailInfos = reactive({
   "artist": {},
@@ -52,6 +56,7 @@ async function SingerId() {
   if (data.result.songs) {
     singerId.value = data.result.songs[0].ar[0].id
   }
+  showConfetti()
   SingerDetails()
 }
 
@@ -82,8 +87,12 @@ async function initColor() {
     element.style.background = generateRandomGradient()
   });
   window.document.querySelector(".group").style.background = generateRandomGradient()
-
 }
+
+function showConfetti() {
+  confetti.addConfetti()
+}
+
 onMounted(() => {
   SingerId()
 })
@@ -91,16 +100,15 @@ onMounted(() => {
 
 <template>
   <main class=" bgc-reverse">
-
-    <div class="currentSong bgc2">
+    <font-awesome-icon :icon="['fas', 'user']" />
+    <div class="currentSong bgc2" @click="showConfetti()">
       <i class="nes-icon youtube is-small" style="margin-right: 10px;"></i>
       <span class="">当前正在播放的歌曲是:{{ currentSong }}</span>
     </div>
-
     <div class="nes-field is-inline group">
       <input type="text" id="dark_field" v-model="singerName" @keyup.enter="SingerId(singerName)"
         class="nes-input is-dark" placeholder="歌曲/歌手">
-      <button type="button" class="nes-btn is-primary" @click=SingerId(singerName)>Search</button>
+      <button  type="button" class="nes-btn is-primary" @click=SingerId(singerName) >Search</button>
     </div>
 
 
