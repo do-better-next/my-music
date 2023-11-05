@@ -6,9 +6,9 @@ import {generateRandomGradient} from '../utils/generateRandomGradient'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 if (import.meta.env.MODE == 'development') {
-    axios.defaults.baseURL = '/musicapi'
+    axios.defaults.baseURL = '/api'
 } else {
-    axios.defaults.baseURL = 'http://121.5.167.62:3000'
+    axios.defaults.baseURL = 'http://47.107.57.59'
 }
 
 const m_request = axios.create({

@@ -19,10 +19,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/myapi/, ""), 
           //重写路径,替换/api
       },
-      '/musicapi': {
-        target: 'http://121.5.167.62:3000', //目标url
+      '/api': {
+        target: 'http://47.107.57.59', //目标url
         changeOrigin: true, //支持跨域
-        rewrite: (path) => path.replace(/^\/musicapi/, ""), 
+        rewrite: (path) => path.replace(/^\/api/, ""), 
           //重写路径,替换/api
       }
 

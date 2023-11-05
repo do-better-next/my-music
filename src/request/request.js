@@ -1,7 +1,7 @@
 import axios from 'axios'
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-axios.defaults.baseURL="/myapi"
+axios.defaults.baseURL="http://127.0.0.1:8080"
 const request = axios.create({
     timeout:5000
 });

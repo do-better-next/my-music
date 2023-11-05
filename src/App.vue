@@ -2,6 +2,7 @@
 import { onMounted, reactive, ref, watch, nextTick } from 'vue';
 import { getSingerId, getSingerDetails, getSongById } from './api/singer'
 import { generateRandomGradient } from './utils/generateRandomGradient'
+import Login from './view/Login.vue';
 import JSConfetti from 'js-confetti'
 
 const confetti = new JSConfetti()
@@ -10,35 +11,35 @@ const confetti = new JSConfetti()
 //歌手id
 const singerId = ref(0)
 //搜索的歌手姓名
-const singerName = ref("falao")
+const singerName = ref("谁")
 //热门歌手列表
 const hotSingers = reactive([
-  "GAI",
-  "宝石Gem",
-  "PG One",
-  "黄旭",
-  "艾热",
-  "Vinida",
-  "Bridge",
-  "摩登兄弟刘宇宁",
-  "李佳隆",
-  "Jony J",
-  "郭采洁",
+  "谁",
+  "阿拉斯加海湾",
+  "篝火旁",
+  "如果爱忘了",
+  "虚拟",
+  "Faded",
+  "飘向远方",
+  "晚风站台",
+  "奢香夫人",
+  "小河淌水",
+  "我的未来式",
   "那吾克热",
-  "Jony J (王栎鑫)",
-  "C-Block",
-  "Ty. ",
-  "苏宣",
-  "大鹏",
-  "杨和苏",
-  "后弦",
-  "Tizzy T",
-  "艾福杰尼",
-  "Piggy",
-  "罗言",
-  "功夫胖",
-  "盛宇",
-  "派克特"
+  "梁博",
+  "破茧",
+  "枯木逢春",
+  "我怀念的",
+  "探窗",
+  "张碧晨",
+  "素颜",
+  "遇见",
+  "辞九门回忆",
+  "许嵩",
+  "陈粒",
+  "半生雪",
+  "白鸽",
+  "予你"
 ])
 //音频的src
 const songUrl = ref("")
@@ -49,6 +50,7 @@ const singerDetailInfos = reactive({
 })
 //当前播放的歌曲
 const currentSong = ref("")
+
 
 
 async function SingerId() {
@@ -62,8 +64,10 @@ async function SingerId() {
 
 async function SongById(param) {
   const { data } = await getSongById({ "id": param.privilege.id })
+  let audio = window.document.getElementsByTagName('audio')
   songUrl.value = data.data[0].url
   currentSong.value = param.name
+  audio.autoplay = true
 }
 
 async function SingerDetails() {
@@ -77,7 +81,7 @@ async function SingerDetails() {
   });
   initColor()
 }
-function serachByHotSinger(name) {
+function searchByHotSinger(name) {
   singerName.value = name
   SingerId()
 }
@@ -93,39 +97,66 @@ function showConfetti() {
   confetti.addConfetti()
 }
 
+function searchSinger(singer) {
+  if (singer == null) {
+    return false
+  }
+  window.document.getElementById("searchSinger").href = `https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=monline_3_dg&wd=` + singer
+
+}
 onMounted(() => {
   SingerId()
 })
 </script>
 
 <template>
-  <main class=" bgc-reverse">
-    <font-awesome-icon :icon="['fas', 'user']" />
+  <!-- header -->
+  <header>
+    <Login/>
     <div class="currentSong bgc2" @click="showConfetti()">
+      <font-awesome-icon :icon="['fas', 'user']" />
       <i class="nes-icon youtube is-small" style="margin-right: 10px;"></i>
       <span class="">当前正在播放的歌曲是:{{ currentSong }}</span>
     </div>
+    <audio id="music" class="bgc-reverse mAudio"  :src=songUrl loop autoplay controls>
+      您的浏览器不支持 audio 元素。
+    </audio>
+  </header>
+  <!-- 主体 -->
+  <main class=" bgc-reverse">
+    <!-- 搜索歌手 -->
     <div class="nes-field is-inline group">
       <input type="text" id="dark_field" v-model="singerName" @keyup.enter="SingerId(singerName)"
         class="nes-input is-dark" placeholder="歌曲/歌手">
-      <button  type="button" class="nes-btn is-primary" @click=SingerId(singerName) >Search</button>
+      <button type="button" class="nes-btn is-primary" @click=SingerId(singerName)>Search</button>
     </div>
 
-
+    <!-- 热门歌手 -->
     <div class="info bgc2 animate__animated animate__fadeInDown">
+      <a href="" onclick="return false" target="_blank" class="nes-badge is-splited">
+        <span class="is-dark">歌手</span>
+        <span class="is-success">歌曲</span>
+      </a>
       <ul class="hotSingers ">
-        <li class="bgc " v-for="item in hotSingers " :key=item @click=serachByHotSinger(item)>{{ item }}</li>
+        <li class="bgc " v-for="item in hotSingers " :key=item @click=searchByHotSinger(item)>{{ item }}</li>
       </ul>
     </div>
 
-
+    <!-- 歌手介绍 -->
     <div class="info bgc2 animate__animated animate__fadeInDown">
-      <div class="margin-top">歌手：{{ singerDetailInfos.artist.name }}</div>
-      <div class="margin-top">歌手介绍：{{ singerDetailInfos.artist.briefDesc }}</div>
-      <div class="margin-top">总唱片：{{ singerDetailInfos.artist.albumSize }}</div>
+      <div style="margin-left: 15px;" @click="searchSinger(singerDetailInfos.artist.name)">
+        <a id="searchSinger" target="_blank" class="nes-badge is-icon">
+          <span class="is-dark">more</span>
+          <span class="is-warning">歌手简介</span>
+        </a>
+
+      </div>
+      <div>歌手：{{ singerDetailInfos.artist.name }}</div>
+      <div>歌手介绍：{{ singerDetailInfos.artist.briefDesc }}</div>
+      <div>总唱片：{{ singerDetailInfos.artist.albumSize }}</div>
     </div>
 
-
+    <!-- 歌曲列表 -->
     <div>
       <ul class="songList">
         <li class="bgc cardItem" v-for="item in singerDetailInfos.hotSongs" :key="item">
@@ -135,13 +166,53 @@ onMounted(() => {
         </li>
       </ul>
     </div>
-
-    <audio id="music" class="bgc-reverse mAudio" loop :src=songUrl autoplay controls>
-      您的浏览器不支持 audio 元素。
-    </audio>
   </main>
+  <!-- 底部 -->
+  <footer class="footer">
+    <div>
+      <a href="http://www.caoxiguo.top" target="_parent">Copyright © 2013-2023 我的音乐 caoxiguo.top All Rights
+        Reserved.</a>
+      <a href="https://beian.miit.gov.cn/" target="_blank">备案号:</a>
+      <a href="https://beian.miit.gov.cn/" target="_blank">皖ICP备2021017504号</a>
+    </div>
+  </footer>
 </template>
 <style scoped>
+.currentSong {
+  /* position: fixed; */
+  width: 100vw;
+  padding: 15px 10px;
+
+  height: 50px;
+}
+
+.mAudio {
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  opacity: .9;
+  z-index: 98;
+  padding: 0;
+}
+
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #999;
+  border-top: 1px solid #b89797;
+}
+
+.footer a {
+  font-size: 14px;
+  color: #999;
+}
+
 main {
   overflow: hidden;
 }
@@ -167,12 +238,6 @@ main {
   }
 }
 
-.currentSong {
-  position: fixed;
-  width: 100vw;
-  padding: 10px;
-  z-index: 99;
-}
 
 .hotSingers {
   display: flex;
@@ -195,27 +260,19 @@ main {
   margin-bottom: 15px;
 }
 
-.mAudio {
-  width: 100%;
-  height: 10vh;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-}
-
-.margin-top {
+.info div {
   margin: 10px;
-}
 
-.margin-left {
-  margin-left: 10px;
 }
 
 .songList {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 10vh;
-  justify-content: space-around;
+  margin-bottom: 15vh;
+  justify-content: space-between;
+  margin: auto;
+  width: 90vw;
+  margin-bottom: 1.5rem;
 }
 
 .songList li {
@@ -237,8 +294,7 @@ main {
 
 .group {
   background-color: #212529;
-  padding: .5rem 1rem;
-  margin-top: 50px;
+  padding: .5rem;
 }
 
 .group input {
